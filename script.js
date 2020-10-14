@@ -262,8 +262,8 @@ function Render() {
 
         ship.visible = false;
         ctx.fillStyle = 'white';
-        ctx.font = '50px Arial';
-        ctx.fillText("GAME OVER", canvasWidth / 2 - 150, canvasHeight / 2);
+        ctx.font = '50px Impact';
+        ctx.fillText("GAME OVER", canvasWidth / 2 - 100, canvasHeight / 2);
         ship.visible = false;
     }
 
@@ -284,9 +284,9 @@ function Render() {
     DrawLifeShips();
 
     if(help){
-        ctx.font = '30px Arial';
+        ctx.font = '30px Impact';
         ctx.fillStyle = "#F4D03F";
-        ctx.fillText("Press Space To Start", canvasWidth/2-100, canvasHeight/2 +100);
+        ctx.fillText("Press Space To Start", canvasWidth/2-100, canvasHeight/2+100);
         ctx.font = '14px Arial';
         ctx.fillStyle = "white";
         ctx.fillText("Press ^ to move forward, < & > to change direction. Space to shoot.", canvasWidth/2-180, canvasHeight/2 +140);
@@ -351,7 +351,7 @@ function Render() {
             asteroids[j].Draw(j);
         }
     }
-    highScore = Math.max(score, highScore);
+    // highScore = Math.max(score, highScore);
     // localStorage.setItem(localStorageName, highScore);
     // // ctx.font = '21px Arial';
     // ctx.fillText("HIGH SCORE : " + highScore.toString(), 20, 70);
