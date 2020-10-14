@@ -8,7 +8,7 @@ let ship;
 let asteroids = [];
 let bullets = [];
 let score = 0;
-let lives = 3;
+let lives = 1;
 let highScore = 0;
 let localStorageName = "HighScore";
 let image = document.getElementById('source');
@@ -51,7 +51,7 @@ function loadCanvas() {
 
 
 
-
+//the triangle
 class Ship {
     constructor() {
         this.visible = true;
