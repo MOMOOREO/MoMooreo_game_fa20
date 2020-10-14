@@ -1,4 +1,6 @@
+//reference:https://codepen.io/jeffibacache/pen/bzBsp ----------------------------
 
+//vars in the coding
 let canvas;
 let ctx;
 let canvasHeight = window.innerHeight - 20;
