@@ -9,9 +9,7 @@ let asteroids = [];
 let bullets = [];
 let score = 0;
 let lives = 3;
-let highScore = 0;
 let localStorageName = "HighScore";
-let image = document.getElementById('source');
 let help = true;
 document.addEventListener("DOMContentLoaded", loadCanvas);
 
@@ -64,7 +62,7 @@ class Ship {
         this.rotateSpeed = 0.001;
         this.radius = 15;
         this.angle = 0;
-        this.strokeColor = 'white';
+        this.strokeColor = '#C39BD3 ';//triangle stroke color
         // Used to know where to fire the bullet from
         this.noseX = canvasWidth / 2 + 15;
         this.noseY = canvasHeight / 2;
@@ -122,7 +120,7 @@ class Ship {
         }
         ctx.closePath();
         ctx.stroke();
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "#C39BD3 ";//triangle shape color
         ctx.fill();
     }
 }
@@ -155,8 +153,8 @@ class Asteroid {
         this.visible = true;
         this.x = x || Math.floor(Math.random() * canvasWidth);
         this.y = y || Math.floor(Math.random() * canvasHeight);
-        this.speed = 3;
-        this.radius = radius || 50;
+        this.speed = 3; 
+        this.radius = radius || 50;//it will be gigger if ++ the number;
         this.angle = Math.floor(Math.random() * 359);
         this.strokeColor = 'white';
         this.collisionRadius = collisionRadius || 46;
@@ -241,11 +239,11 @@ function DrawLifeShips() {
 
 
 function Render() {
-    ship.movingForward = (keys[87]);
-    if (keys[68]) {
+    ship.movingForward = (keys[38]);
+    if (keys[39]) {
         ship.Rotate(1);
     }
-    if (keys[65]) {
+    if (keys[37]) {
         ship.Rotate(-1);
     }
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -285,11 +283,11 @@ function Render() {
 
     if(help){
         ctx.font = '30px Arial';
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "#F4D03F";
         ctx.fillText("Press Space To Start", canvasWidth/2-100, canvasHeight/2 +100);
         ctx.font = '14px Arial';
         ctx.fillStyle = "white";
-        ctx.fillText("Press W to move forward, A & D to change direction. Space to shoot.", canvasWidth/2-180, canvasHeight/2 +140);
+        ctx.fillText("Press ^ to move forward, < & > to change direction. Space to shoot.", canvasWidth/2-180, canvasHeight/2 +140);
     }
 
     if (ship.x !== canvasWidth / 2 && ship.y !== canvasWidth / 2) {
@@ -320,7 +318,7 @@ function Render() {
                         }
                         asteroids.splice(l, 1);
                         bullets.splice(m, 1);
-                        score += 20;
+                        score += 20;//one shoot for 20 pts;
 
                         // Used to break out of loops because splicing arrays
                         // you are looping through will break otherwise
