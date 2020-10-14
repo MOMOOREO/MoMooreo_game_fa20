@@ -122,7 +122,7 @@ class Ship {
         }
         ctx.closePath();
         ctx.stroke();
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "white";
         ctx.fill();
     }
 }
@@ -286,7 +286,7 @@ function Render() {
     if(help){
         ctx.font = '30px Arial';
         ctx.fillStyle = "yellow";
-        ctx.fillText("Start", canvasWidth/2, canvasHeight/2);
+        ctx.fillText("Press Space To Start", canvasWidth/2-100, canvasHeight/2 +100);
         ctx.font = '14px Arial';
         ctx.fillStyle = "white";
         ctx.fillText("Press W to move forward, A & D to change direction. Space to shoot.", canvasWidth/2-180, canvasHeight/2 +140);
