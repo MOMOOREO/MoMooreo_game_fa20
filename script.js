@@ -3,15 +3,15 @@
 //vars in the coding
 let canvas;
 let ctx;
-let canvasHeight = window.innerHeight - 20;
-let canvasWidth = window.innerWidth - 20;
+let canvasHeight = window.innerHeight - 40;
+let canvasWidth = window.innerWidth - 40;
 let keys = [];
 let ship;
 let asteroids = [];
 let bullets = [];
 let score = 0;
-let lives = 3;
-let localStorageName = "HighScore";
+let lives = 3;//collision 3 times_end game
+// let localStorageName = "HighScore";
 let help = true;
 document.addEventListener("DOMContentLoaded", loadCanvas);
 
@@ -26,7 +26,7 @@ function loadCanvas() {
 
     for (let i = 0; i < 8; i++) {
         asteroids.push(new Asteroid());
-    }
+    }//how many asteroid is in the canvas,8-10 is a good range
 
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -38,13 +38,16 @@ function loadCanvas() {
         keys[e.keyCode] = false;
         if (e.keyCode === 32) {
             bullets.push(new Bullet(ship.angle));
-        }
+        }//32=space
     });
-    if (isNaN(localStorage.getItem(localStorageName)) || localStorage.getItem(localStorageName) == null) {
-        highScore = 0;
-    } else {
-        highScore = localStorage.getItem(localStorageName);
-    }
+
+    // if want to add highest score, the code is list below:
+    // if (isNaN(localStorage.getItem(localStorageName)) || localStorage.getItem(localStorageName) == null) {
+    //     highScore = 0;
+    // } else {
+    //     highScore = localStorage.getItem(localStorageName);
+    // }
+
     ship = new Ship();
     Render();
 }
@@ -56,18 +59,17 @@ class Ship {
     constructor() {
         this.visible = true;
         this.x = canvasWidth / 2;
-        this.y = canvasHeight / 2;
+        this.y = canvasHeight / 2;//locate at the center at the beginning
         this.movingForward = false;
         this.speed = 0.1;
         this.velX = 0;
-        this.velY = 0;
+        this.velY = 0;//control like the bouncing ball
         this.rotateSpeed = 0.001;
-        this.radius = 15;
-        this.angle = 0;
+        this.radius = 20;
+        this.angle = 20;
         this.strokeColor = '#C39BD3 ';//triangle stroke color
         // Used to know where to fire the bullet from
-        this.noseX = canvasWidth / 2 + 15;
-        this.noseY = canvasHeight / 2;
+       
     }
 
     Rotate(dir) {
@@ -75,7 +77,7 @@ class Ship {
     }
 
     Update() {
-        let radian = this.angle / Math.PI * 180;
+        let radian = this.angle / Math.PI * 180;//move forword,not back, back is 0
         if (this.movingForward) {
             this.velX += Math.cos(radian) * this.speed;
             this.velY += Math.sin(radian) * this.speed;
@@ -98,7 +100,7 @@ class Ship {
         }
 
         this.velX *= 0.99;
-        this.velY *= 0.99;
+        this.velY *= 0.99;//ship moving when press key
 
         this.x -= this.velX;
         this.y -= this.velY;
@@ -110,10 +112,9 @@ class Ship {
         ctx.strokeStyle = this.strokeColor;
         ctx.beginPath();
         // Angle between vertices of the ship
-        let vertAngle = ((Math.PI * 2) / 3);
+        let vertAngle = ((Math.PI*2) / 3);//(Math.PIZ•3)/3=LINE
 
-        let radians = this.angle / Math.PI * 180;
-        // Where to fire bullet from
+        let radians = this.angle / Math.PI * 180;// Where to fire bullet from
         this.noseX = this.x - this.radius * Math.cos(radians);
         this.noseY = this.y - this.radius * Math.sin(radians);
 
@@ -133,19 +134,19 @@ class Bullet {
         this.x = ship.noseX;
         this.y = ship.noseY;
         this.angle = angle;
-        this.height = 4;
-        this.width = 4;
+        this.height = 5;
+        this.width = 5;
         this.speed = 5;
-        this.velX = 0;
+        this.velX = 0 ;
         this.velY = 0;
     }
     Update() {
-        let radians = this.angle / Math.PI * 180;
+        let radians = this.angle / Math.PI * 180;// Where to fire bullet from
         this.x -= Math.cos(radians) * this.speed;
         this.y -= Math.sin(radians) * this.speed;
     }
     Draw() {
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = '#F1948A';//bullet's color
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
 }
@@ -155,9 +156,9 @@ class Asteroid {
         this.visible = true;
         this.x = x || Math.floor(Math.random() * canvasWidth);
         this.y = y || Math.floor(Math.random() * canvasHeight);
-        this.speed = 3; 
+        this.speed = 2; 
         this.radius = radius || 50;//it will be gigger if ++ the number;
-        this.angle = Math.floor(Math.random() * 359);
+        this.angle = Math.floor(Math.random() * 100);
         this.strokeColor = 'white';
         this.collisionRadius = collisionRadius || 46;
         // Used to decide if this asteroid can be broken into smaller pieces
@@ -182,9 +183,9 @@ class Asteroid {
     }
     Draw() {
         ctx.beginPath();
-        let vertAngle = ((Math.PI * 2) / 6);
+        let vertAngle = ((Math.PI * 5) / 7);//asteroid shape; same number = line
         var radians = this.angle / Math.PI * 180;
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 5; i++) {
             ctx.lineTo(this.x - this.radius * Math.cos(vertAngle * i + radians), this.y - this.radius * Math.sin(vertAngle * i + radians));
         }
         ctx.closePath();
@@ -239,7 +240,7 @@ function DrawLifeShips() {
     }
 }
 
-
+//key control;38^,39>,37<;
 function Render() {
     ship.movingForward = (keys[38]);
     if (keys[39]) {
@@ -267,7 +268,7 @@ function Render() {
         ship.visible = false;
     }
 
-    // HOME WORK SOLUTION : Creates a new level and increases asteroid speed
+    //  Creates a new level and increases asteroid speed
     if (asteroids.length === 0) {
         ship.x = canvasWidth / 2;
         ship.y = canvasHeight / 2;
@@ -323,7 +324,7 @@ function Render() {
                         score += 20;//one shoot for 20 pts;
 
                         // Used to break out of loops because splicing arrays
-                        // you are looping through will break otherwise
+                        // looping through will break otherwise
                         break loop1;
                     }
                 }
@@ -346,11 +347,12 @@ function Render() {
     if (asteroids.length !== 0) {
         for (let j = 0; j < asteroids.length; j++) {
             asteroids[j].Update();
-            // Pass j so we can track which asteroid points
+            // Pass j so I can track which asteroid points
             // to store
             asteroids[j].Draw(j);
         }
     }
+    //if visible high score
     // highScore = Math.max(score, highScore);
     // localStorage.setItem(localStorageName, highScore);
     // // ctx.font = '21px Arial';
